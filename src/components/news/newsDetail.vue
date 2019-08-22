@@ -21,8 +21,9 @@ export default {
     },created(){
         //1:获取路由参数
         let id = this.$route.query.id;
+        console.log(id)
         //2:拼接路由参数成为后台请求的URL
-        this.$ajax.get('getnew/' + id)
+        this.axios.get('/api/news/' + id)
         .then(res=>{
              //3:响应回来渲染页面
              this.newsDetail = res.data.message[0]; 

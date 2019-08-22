@@ -1,40 +1,50 @@
 <template>
     <div>
+
         <!-- home也轮播图 -->
         <mt-swipe :auto="4000">
-            <mt-swipe-item v-for="item of imgs" :key="item.id"><a :href="item.imgUrl"><img :src="item.imgUrl"/></a></mt-swipe-item>
+            <mt-swipe-item v-for="item of imgs" :key="item.id">
+                <a :href="item.imgUrl">
+                    <img :src="item.imgUrl"/>
+                </a>
+            </mt-swipe-item>
         </mt-swipe>
+
         <!-- home九宫格 -->
         <div class="mui-content">
-                <ul class="mui-table-view mui-grid-view mui-grid-9">
-                    <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-                    <!-- 1：去哪里 -->
-                        <router-link :to="{name:'news.list'}">
-                            <span class="mui-icon mui-icon-home"></span>
-                            <div class="mui-media-body">新闻资讯</div>
-                        </router-link>
-                    </li>
-                    <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
-                            <span class="mui-icon mui-icon-email"></span>
-                            <div class="mui-media-body">图文分享</div></a></li>
-                    <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
-                            <span class="mui-icon mui-icon-chatbubble"></span>
-                            <div class="mui-media-body">商品展示</div></a></li>
-                    <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
-                            <span class="mui-icon mui-icon-location"></span>
-                            <div class="mui-media-body">留言反馈</div></a></li>
-                    <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
-                            <span class="mui-icon mui-icon-search"></span>
-                            <div class="mui-media-body">搜索资讯</div></a></li>
-                    <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
-                            <span class="mui-icon mui-icon-phone"></span>
-                            <div class="mui-media-body">联系我们</div></a></li>
-                </ul> 
+            <ul class="mui-table-view mui-grid-view mui-grid-9">
+                <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+                <!-- 1：新闻——去哪里 -->
+                    <router-link :to="{name:'news.list'}">
+                        <span class="mui-icon mui-icon-home"></span>
+                        <div class="mui-media-body">新闻资讯</div>
+                    </router-link>
+                </li>
+                <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+                    <!-- 1：图片——去哪里 -->
+                    <router-link :to="{name:'photo.share'}">
+                        <span class="mui-icon mui-icon-email"></span>
+                        <div class="mui-media-body">图文分享</div>
+                    </router-link>
+                </li>
+                <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
+                    <span class="mui-icon mui-icon-chatbubble"></span>
+                    <div class="mui-media-body">商品展示</div></a></li>
+                <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
+                    <span class="mui-icon mui-icon-location"></span>
+                    <div class="mui-media-body">留言反馈</div></a></li>
+                <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
+                    <span class="mui-icon mui-icon-search"></span>
+                    <div class="mui-media-body">搜索资讯</div></a></li>
+                <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
+                    <span class="mui-icon mui-icon-phone"></span>
+                    <div class="mui-media-body">联系我们</div></a></li>
+            </ul>
         </div>
+
     </div>
 </template>
 <script>
-
     export default {
         data(){
             return {
@@ -42,48 +52,42 @@
             }
         },
         created(){
-            //发起请求
-          // this.axios.create({
-          //   baseURL: 'http://localhost:80/',
-          //   timeout: 20000,
-          //   validateStatus:function(status){
-          //     return status < 500;
-          //   },
-          //   headers: {
-          //     // 跨域请求 这个配置不能少
-          //     "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
-          //     'Accept': 'application/json'
-          //   }
-          // });
+          //发起请求
           this.axios.get('/api/index.json').then(res=>{
-                res = res.data
+            res = res.data
             if (res.ret && res.data){
-              const data = res.data
-             console.log(data.swiperList);
+              const data = res.data;
               this.imgs = data.swiperList;
             }
 
-            })
+          })
         }
     }
 </script>
 <style scoped>
+
 /*轮播图样式*/
 .mint-swipe{
-    max-height:187px; 
+    width: 100%;
+    height: 22%;
 }
-.mint-swipe img {
+.mint-swipe-item img {
+    width: 100%;
     height: 100%;
 }
+
+
 /*九宫格样式*/
 .mui-table-view.mui-grid-view.mui-grid-9{
     background-color: white;
-     border: 0;
-     margin-top: 0px;
+    border: 0;
+    margin-top: 0px;
 }
 .mui-table-view.mui-grid-view.mui-grid-9 li{
     border: 0;
 }
+
+
 /*九宫格清除字体图标*/
 .mui-icon-home:before,
 .mui-icon-email:before,
@@ -93,6 +97,8 @@
 .mui-icon-phone:before{
     content: '';
 }
+
+
 /*九宫格背景图片*/
 .mui-icon-home{
     background-image: url('../../static/img/news.png');

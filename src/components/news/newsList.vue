@@ -1,14 +1,15 @@
 <template>
-    <div class="tmpl">
-    
-        <nav-bar title="新闻列表"></nav-bar>
+     <!-- class=tmpl留出底部的空间 -->
+     <div class="tmpl">
 
+     <!-- 父：navbar复用 -->
+     <nav-bar title="新闻列表"></nav-bar>
 
-    <!-- MUI 图文列表 -->
+     <!-- MUI 图文列表 -->
         <ul class="mui-table-view">
             <li v-for="news in newsList" :key="news.id" class="mui-table-view-cell mui-media">
                 <router-link :to="{name:'news.detail',query:{id:news.id} }">
-                    <img class="mui-media-object mui-pull-left" :src="news.img_url">
+                    <img class="mui-media-object mui-pull-left" :src="news.imgUrl">
                     <div class="mui-media-body">
                         <span v-text="news.title"></span>
                         <div class="news-desc">
@@ -23,21 +24,22 @@
 </template>
 <script>
 export default {
-    data(){
+     data(){
         return {
             newsList:[],//新闻列表数据
         }
-    },
-    created(){
+     },
+      created(){
         //发起请求
-        this.$ajax.get('getnewslist')
-        .then(res=>{
-            this.newsList = res.data.message;
+        this.axios.get('/api/index.json').then(res=>{
+          res = res.data
+          if (res.ret && res.data){
+            const data = res.data;
+            this.newsList = data.recommendList;
+          }
+
         })
-        .catch(err=>{
-            console.log(err);
-        })
-    }
+      }
 }
 
 </script>

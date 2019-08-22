@@ -33,7 +33,7 @@ module.exports = {
                 test: /\.(jpg|png|svg|ttf|woff|woff2|gif)$/,
                 loader: 'url-loader',
                 options: {
-                    limit: 4096, //4096字节以上生成文件，否则base6
+                    limit: 4096, //4096字节以上生成文件，否则base64
                     name: '[name].[ext]'
                 }
             },
@@ -45,6 +45,15 @@ module.exports = {
                     presets: ['es2015'], //关键字
                     plugins: ['transform-runtime'], //函数
                 }
+            },
+            // 解析vue-preview的es6代码
+            {
+                test: /vue-preview.src.*?js$/,
+                loader: 'babel-loader',
+                // options: {   建议使用.babelrc文件，在当前根目录就可以了
+                //     presets: ['es2015'], //关键字
+                //     plugins: ['transform-runtime'], //函数
+                // }
             },
             {
                 test: /\.vue$/,
